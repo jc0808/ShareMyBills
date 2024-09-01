@@ -16,6 +16,12 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Container from 'react-bootstrap/esm/Container';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/esm/Button';
 
 const LoginPage = () => {
 
@@ -45,17 +51,17 @@ const LoginPage = () => {
     }
 
     return (
-        <MDBContainer className="my-5">
+        <Container className="my-5">
 
-            <MDBCard>
-                <MDBRow className='g-0'>
+            <Card>
+                <Row className='g-0'>
 
-                    <MDBCol md='6'>
-                        <MDBCardImage sizes="sm" src={LogoPic} className='img-fluid' />
-                    </MDBCol>
+                    <Col md='6'>
+                        <Card.Img sizes="sm" src={LogoPic} className='img-fluid' />
+                    </Col>
 
-                    <MDBCol md='6'>
-                        <MDBCardBody className='d-flex flex-column'>
+                    <Col md='6'>
+                        <Card.Body className='d-flex flex-column'>
 
                             <div className='d-flex flex-row mt-2'>
                                 <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }} />
@@ -67,8 +73,8 @@ const LoginPage = () => {
                             <MDBInput wrapperClass='mb-4' ref={emailRef} label='Email address' id='formControlLg' type='email' size="lg" required />
                             <MDBInput wrapperClass='mb-4' ref={passwordRef} label='Password' id='formControlLg' type='password' size="lg" required />
 
-                            <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={() => handleSubmit()}>Login</MDBBtn>
-                            <a className="small text-muted" href="#!">Forgot password?</a>
+                            <Button className="mb-4 px-5 loginPageButton" color='dark' size='lg' onClick={() => handleSubmit()}>Login</Button>
+                            {/* <a className="small text-muted" href="#!">Forgot password?</a> */}
                             <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Don't have an account? <a href="signup" style={{ color: '#393f81' }}>Register here</a></p>
 
                             <div className='d-flex flex-row justify-content-start'>
@@ -76,13 +82,13 @@ const LoginPage = () => {
                                 <a href="#!" className="small text-muted">Privacy policy</a>
                             </div>
 
-                        </MDBCardBody>
-                    </MDBCol>
+                        </Card.Body>
+                    </Col>
 
-                </MDBRow>
-            </MDBCard>
+                </Row>
+            </Card>
 
-        </MDBContainer>
+        </Container>
     )
 };
 

@@ -7,17 +7,26 @@ import BillsTable from "./BillsTable";
 import NavBar from "./NavBar";
 import { useSelector } from "react-redux";
 import { selectCompletedTotal, selectTotalPrice } from "./features/counter/householdSlice";
+import { useState } from "react";
 
 const DashBoard = () => {
 
-    const totalAmout = useSelector(selectTotalPrice);
+    const [totalAmount, setTotalAmount] = useState({
+        totalCompleted: 0,
+        totalOutOfCompleted: 0,
+    });
     const completedTotal = useSelector(selectCompletedTotal);
     let USDollar = new Intl.NumberFormat('en-Us', {
         style: 'currency',
         currency: 'USD',
     });
 
-    const completedPercent = (completedTotal * 100) / totalAmout;
+    const completedPercent = (completedTotal * 100) / totalAmount.totalOutOfCompleted;
+
+    const getDashboardTotal = (total) => {
+
+        setTotalAmount(total);
+    };
 
     return (
         <>
@@ -27,11 +36,11 @@ const DashBoard = () => {
                     <Col>
                         <label>{`${completedTotal === 0 ? 0 : Math.round(completedPercent)}% Complete`}</label>
                         <ProgressBar animated now={completedPercent} />
-                        <label>{`${USDollar.format(completedTotal)} / ${USDollar.format(totalAmout)}`}</label>
+                        <label>{`${USDollar.format(completedTotal)} / ${USDollar.format(totalAmount.totalOutOfCompleted)}`}</label>
                     </Col>
                 </Row>
 
-                <BillsTable myAssignments={true} />
+                <BillsTable myAssignments={true} getDashboardTotal={getDashboardTotal} />
 
 
             </Container>

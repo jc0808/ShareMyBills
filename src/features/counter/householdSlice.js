@@ -37,16 +37,25 @@ export const household = createSlice({
             state.household.bills = [
                 ...state.household.bills,
                 newBill
-            ]
+            ];
         },
 
         addBills: (state, action) => {
-            state.household.bills = action.payload
-        }
+            state.household.bills = action.payload;
+        },
+        changeBills: (state, action) => {
+            state.household.bills = state.household.bills.map(bill => {
+                if (bill.id === action.payload.id) {
+                    bill.status = action.payload.status;
+                    return bill;
+                }
+                return bill;
+            });
+        },
     },
 });
 
-export const { addBill, addMembers, addHouseholdId, addHousehold, addBills } = household.actions;
+export const { addBill, addMembers, addHouseholdId, addHousehold, addBills, changeBills } = household.actions;
 
 export const selectBills = state => state.household.household.bills;
 export const selectMembers = state => state.household.household.members;

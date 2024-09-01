@@ -27,8 +27,8 @@ const MyHousehold = () => {
     const totalPrice = useSelector(selectTotalPrice);
     const [screen, setScreen] = useState(0);
     const codeRef = useRef(null);
-    const enableButton = useSelector(selectAllAssignedTrue);
-    const [buttonCreate, setButtonCreate] = useState(enableButton);
+    // const enableButton = useSelector(selectAllAssignedTrue);
+    const [buttonCreate, setButtonCreate] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -36,6 +36,10 @@ const MyHousehold = () => {
         if (currentHouseholdId !== null) {
             setScreen(1);
         }
+
+        const findNull = bills?.find(bill => bill.assigned === null);
+
+        setButtonCreate(findNull ? false : true)
     }, [currentHouseholdId])
 
 
@@ -105,9 +109,7 @@ const MyHousehold = () => {
     };
 
     const createAssignmets = async () => {
-        let billsCopy = [
-            ...bills
-        ];
+        let billsCopy = bills.filter(bill => bill.assigned === null);
         const membersCount = members.length;
         const splitPrice = totalPrice / membersCount;
         const countTracking = [];
@@ -137,11 +139,20 @@ const MyHousehold = () => {
 
         let incrementTracking = (countTracking, billsCopy) => {
             countTracking = countTracking.map(trackMember => {
-                if (trackMember.total < splitPrice) {
-                    const bill = billsCopy.pop();
-                    if (bill.assigned !== null) {
+                console.log(trackMember.total)
+                const bill = billsCopy.pop();
+                console.log(billsCopy)
+                if (trackMember.total <= splitPrice) {
+
+                    // console.log(trackMember)
+                    // console.log(bill)
+                    if (bill?.assigned !== null) {
                         return;
                     }
+
+
+
+
 
                     assingments.push({
                         name: bill.name,
@@ -154,19 +165,31 @@ const MyHousehold = () => {
                             uid: trackMember.uid
                         }
 
+
+
                     });
+
+
                     return {
                         ...trackMember,
-                        total: trackMember.total + bill.amount
+                        total: Number(trackMember.total + bill.amount)
                     }
+
+
                 }
+
+
+
             });
+            // console.log(countTracking);
             return countTracking, billsCopy;
         };
 
-        while (billsCopy.length > 0) {
-            incrementTracking(countTracking, billsCopy);
-        }
+        // while (billsCopy.length > 0) {
+        //     incrementTracking(countTracking, billsCopy);
+        // }
+
+        incrementTracking(countTracking, billsCopy)
 
 
 
@@ -186,10 +209,10 @@ const MyHousehold = () => {
 
         dispatch(addBills(assingments))
 
-        const householdCollectionRef = doc(db, 'households', currentHouseholdId);
-        await updateDoc(householdCollectionRef, {
-            bills: assingments
-        })
+        // const householdCollectionRef = doc(db, 'households', currentHouseholdId);
+        // await updateDoc(householdCollectionRef, {
+        //     bills: assingments
+        // })
         setButtonCreate(true);
 
 

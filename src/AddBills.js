@@ -12,6 +12,7 @@ import { collection, updateDoc } from "firebase/firestore";
 import { selectHouseholdId } from "./features/counter/householdIdSlice";
 import db from "./firebase";
 import { doc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 
 const AddBills = () => {
@@ -34,6 +35,7 @@ const AddBills = () => {
 
 
         const newBill = {
+            id: uuidv4().slice(0, 8),
             name: nameRef.current.value,
             amount: amountRef.current.value,
             due: dueRef.current.value,

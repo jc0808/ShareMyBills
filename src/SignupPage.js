@@ -18,6 +18,13 @@ import { addDoc, collection } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { changeDisplayName } from './features/counter/userSlice';
 
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/esm/Button';
+import Container from 'react-bootstrap/esm/Container';
+
 const SignupPage = () => {
 
     const nameRef = useRef(null);
@@ -79,17 +86,17 @@ const SignupPage = () => {
         };
     };
     return (
-        <MDBContainer className="my-5">
+        <Container className="my-5">
 
-            <MDBCard>
-                <MDBRow className='g-0'>
+            <Card>
+                <Row className='g-0'>
 
-                    <MDBCol md='6'>
-                        <MDBCardImage sizes="sm" src={LogoPic} className='img-fluid' />
-                    </MDBCol>
+                    <Col md='6'>
+                        <Card.Img sizes="sm" src={LogoPic} className='img-fluid' />
+                    </Col>
 
-                    <MDBCol md='6'>
-                        <MDBCardBody className='d-flex flex-column'>
+                    <Col md='6'>
+                        <Card.Body className='d-flex flex-column'>
 
                             <div className='d-flex flex-row mt-2'>
                                 <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }} />
@@ -104,7 +111,7 @@ const SignupPage = () => {
                             <MDBInput wrapperClass='mb-4' ref={confirmPasswordRef} label='ConfirmPassword' id='formControlLg' type='password' size="lg" required />
 
 
-                            <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={() => handleSubmit()}>Sign Up</MDBBtn>
+                            <Button className="mb-4 px-5" color='dark' size='lg' onClick={() => handleSubmit()}>Sign Up</Button>
                             <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Have an account? <a href="/" style={{ color: '#393f81' }}>Login here</a></p>
 
                             <div className='d-flex flex-row justify-content-start'>
@@ -112,13 +119,13 @@ const SignupPage = () => {
                                 <a href='/' className="small text-muted">Privacy policy</a>
                             </div>
 
-                        </MDBCardBody>
-                    </MDBCol>
+                        </Card.Body>
+                    </Col>
 
-                </MDBRow>
-            </MDBCard>
+                </Row>
+            </Card>
 
-        </MDBContainer>
+        </Container>
     )
 };
 
